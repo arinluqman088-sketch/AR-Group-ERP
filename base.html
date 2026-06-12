@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ckb" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AR Group ERP</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">AR</div>
+      <div>
+        <h2>AR Group ERP</h2>
+        <p>POS • Inventory • Reports</p>
+      </div>
+    </div>
+    <nav>
+      <a href="{{ url_for('dashboard') }}">داشبۆرد</a>
+      <a href="{{ url_for('products') }}">کاڵاکان / ستۆک</a>
+      <a href="{{ url_for('sales') }}">فرۆشتن / وەسل</a>
+      <a href="{{ url_for('purchases') }}">کڕین</a>
+      <a href="{{ url_for('customers') }}">کڕیاران</a>
+      <a href="{{ url_for('suppliers') }}">دابینکەران</a>
+      <a href="{{ url_for('expenses') }}">خەرجی</a>
+      <a href="{{ url_for('reports') }}">ڕاپۆرت و Smart Summary</a>
+      <a href="{{ url_for('logout') }}" class="logout">چوونە دەرەوە</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1>{% block page_title %}{% endblock %}</h1>
+        <p>سیستەمی سادەی ERP بۆ دووکان، کۆگا، قاوەخانە و فرۆشتن</p>
+      </div>
+      <span class="pill">{{ session.get('user_name', 'Admin') }}</span>
+    </header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="messages">
+          {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

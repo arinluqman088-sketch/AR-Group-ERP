@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block page_title %}کاڵاکان / ستۆک{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>زیادکردنی کاڵا</h2>
+  <form method="post" class="form grid-form">
+    <input name="sku" placeholder="SKU / کۆد">
+    <input name="name" placeholder="ناوی کاڵا" required>
+    <input name="category" placeholder="جۆر / Category">
+    <input name="cost_price" type="number" step="0.01" placeholder="نرخی کڕین">
+    <input name="sell_price" type="number" step="0.01" placeholder="نرخی فرۆشتن">
+    <input name="stock" type="number" placeholder="ستۆک">
+    <input name="min_stock" type="number" placeholder="کەمترین ستۆک" value="3">
+    <button>زیاد بکە</button>
+  </form>
+</section>
+<section class="panel">
+  <h2>لیستی کاڵاکان</h2>
+  <table>
+    <thead><tr><th>SKU</th><th>ناو</th><th>جۆر</th><th>کڕین</th><th>فرۆشتن</th><th>ستۆک</th><th>حاڵەت</th></tr></thead>
+    <tbody>
+      {% for p in products %}
+      <tr>
+        <td>{{ p.sku or '-' }}</td><td>{{ p.name }}</td><td>{{ p.category }}</td>
+        <td>{{ p.cost_price|money }}</td><td>{{ p.sell_price|money }}</td><td>{{ p.stock }}</td>
+        <td>{% if p.stock <= p.min_stock %}<span class="badge danger">کەمە</span>{% else %}<span class="badge success">باشە</span>{% endif %}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7">کاڵا نییە</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

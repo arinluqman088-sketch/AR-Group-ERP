@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block page_title %}فرۆشتن / وەسل{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>وەسلی نوێ</h2>
+  <form method="post" class="form grid-form">
+    <select name="product_id" required>
+      <option value="">کاڵا هەڵبژێرە</option>
+      {% for p in products %}
+      <option value="{{ p.id }}">{{ p.name }} — ستۆک: {{ p.stock }} — {{ p.sell_price|money }}</option>
+      {% endfor %}
+    </select>
+    <select name="customer_id">
+      <option value="">کڕیاری گشتی</option>
+      {% for c in customers %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}
+    </select>
+    <input name="quantity" type="number" min="1" placeholder="ژمارە" value="1" required>
+    <input name="unit_price" type="number" step="0.01" placeholder="نرخی یەک دانە - ئەگەر بەتاڵ بێت نرخەکەی کاڵا بەکاردێت">
+    <input name="discount" type="number" step="0.01" placeholder="داشکاندن" value="0">
+    <input name="note" placeholder="تێبینی">
+    <button>فرۆشتن تۆمار بکە</button>
+  </form>
+</section>
+<section class="panel">
+  <h2>وەسلەکان</h2>
+  <table>
+    <thead><tr><th>وەسل</th><th>کاڵا</th><th>ژمارە</th><th>کڕیار</th><th>کۆی گشتی</th><th>کات</th></tr></thead>
+    <tbody>
+      {% for s in sales %}
+      <tr>
+        <td>{{ s.invoice_no }}</td><td>{{ s.product_name }}</td><td>{{ s.quantity }}</td>
+        <td>{{ s.customer_name or 'کڕیاری گشتی' }}</td><td>{{ s.total|money }}</td><td>{{ s.created_at }}</td>
+      </tr>
+      {% else %}<tr><td colspan="6">فرۆشتن نییە</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

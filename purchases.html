@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block page_title %}کڕین{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>کڕینی نوێ</h2>
+  <form method="post" class="form grid-form">
+    <select name="product_id" required>
+      <option value="">کاڵا هەڵبژێرە</option>
+      {% for p in products %}<option value="{{ p.id }}">{{ p.name }} — ستۆک: {{ p.stock }}</option>{% endfor %}
+    </select>
+    <select name="supplier_id">
+      <option value="">دابینکەر دیاری نەکراو</option>
+      {% for s in suppliers %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+    </select>
+    <input name="quantity" type="number" min="1" placeholder="ژمارە" value="1" required>
+    <input name="unit_cost" type="number" step="0.01" placeholder="نرخی کڕین" required>
+    <input name="note" placeholder="تێبینی">
+    <button>کڕین تۆمار بکە</button>
+  </form>
+</section>
+<section class="panel">
+  <h2>کڕینەکان</h2>
+  <table>
+    <thead><tr><th>کاڵا</th><th>دابینکەر</th><th>ژمارە</th><th>نرخ</th><th>کۆی گشتی</th><th>کات</th></tr></thead>
+    <tbody>
+      {% for p in purchases %}
+      <tr><td>{{ p.product_name }}</td><td>{{ p.supplier_name or '-' }}</td><td>{{ p.quantity }}</td><td>{{ p.unit_cost|money }}</td><td>{{ p.total|money }}</td><td>{{ p.created_at }}</td></tr>
+      {% else %}<tr><td colspan="6">کڕین نییە</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

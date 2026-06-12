@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ckb" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | AR Group ERP</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-page">
+  <div class="login-card">
+    <div class="logo big">AR</div>
+    <h1>AR Group ERP</h1>
+    <p>چوونەژوورەوە بۆ بەڕێوەبردنی فرۆشتن و ستۆک</p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form method="post" class="form">
+      <label>ئیمەیل</label>
+      <input type="email" name="email" value="admin@argroup.com" required>
+      <label>پاسۆرد</label>
+      <input type="password" name="password" value="admin123" required>
+      <button type="submit">چوونەژوورەوە</button>
+    </form>
+    <small>Demo login: admin@argroup.com / admin123</small>
+  </div>
+</body>
+</html>

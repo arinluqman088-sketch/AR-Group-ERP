@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block page_title %}کڕیاران{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>زیادکردنی کڕیار</h2>
+  <form method="post" class="form grid-form">
+    <input name="name" placeholder="ناو" required>
+    <input name="phone" placeholder="مۆبایل">
+    <input name="address" placeholder="ناونیشان">
+    <button>زیاد بکە</button>
+  </form>
+</section>
+<section class="panel">
+  <h2>لیستی کڕیاران</h2>
+  <table>
+    <thead><tr><th>ناو</th><th>مۆبایل</th><th>ناونیشان</th><th>کات</th></tr></thead>
+    <tbody>
+      {% for c in customers %}
+      <tr><td>{{ c.name }}</td><td>{{ c.phone }}</td><td>{{ c.address }}</td><td>{{ c.created_at }}</td></tr>
+      {% else %}<tr><td colspan="4">کڕیار نییە</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

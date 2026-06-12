@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block page_title %}ڕاپۆرت و Smart Summary{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>فلتەری ڕاپۆرت</h2>
+  <form class="form grid-form" method="get">
+    <input type="date" name="start" value="{{ start }}">
+    <input type="date" name="end" value="{{ end }}">
+    <button>پیشاندان</button>
+  </form>
+</section>
+<section class="cards">
+  <div class="card"><span>فرۆشتن</span><strong>{{ sales_total|money }}</strong></div>
+  <div class="card"><span>کڕین</span><strong>{{ purchase_total|money }}</strong></div>
+  <div class="card"><span>خەرجی</span><strong>{{ expense_total|money }}</strong></div>
+  <div class="card {% if profit_estimate < 0 %}warning{% endif %}"><span>قازانجی خەملێندراو</span><strong>{{ profit_estimate|money }}</strong></div>
+</section>
+<section class="grid two">
+  <div class="panel">
+    <h2>Smart Summary</h2>
+    <ul class="summary">
+      {% for line in smart_summary %}<li>{{ line }}</li>{% endfor %}
+    </ul>
+    <small>ئەمە AI API نییە؛ rule-based smart report ـە. دەتوانرێت دواتر بە ChatGPT API یان local AI پێشکەوتووتر بکرێت.</small>
+  </div>
+  <div class="panel">
+    <h2>زۆرترین کاڵای فرۆشراو</h2>
+    <table>
+      <thead><tr><th>کاڵا</th><th>ژمارە</th><th>فرۆشتن</th></tr></thead>
+      <tbody>
+        {% for b in best_sellers %}<tr><td>{{ b.name }}</td><td>{{ b.qty }}</td><td>{{ b.total|money }}</td></tr>
+        {% else %}<tr><td colspan="3">داتا نییە</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+<section class="panel">
+  <h2>کاڵاکانی ستۆکی کەم</h2>
+  <table>
+    <thead><tr><th>کاڵا</th><th>ستۆک</th><th>کەمترین</th></tr></thead>
+    <tbody>
+      {% for p in low_stock %}<tr><td>{{ p.name }}</td><td>{{ p.stock }}</td><td>{{ p.min_stock }}</td></tr>
+      {% else %}<tr><td colspan="3">هیچ کاڵایەک ستۆکی کەم نییە</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

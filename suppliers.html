@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block page_title %}دابینکەران{% endblock %}
+{% block content %}
+<section class="panel">
+  <h2>زیادکردنی دابینکەر</h2>
+  <form method="post" class="form grid-form">
+    <input name="name" placeholder="ناو" required>
+    <input name="phone" placeholder="مۆبایل">
+    <input name="address" placeholder="ناونیشان">
+    <button>زیاد بکە</button>
+  </form>
+</section>
+<section class="panel">
+  <h2>لیستی دابینکەران</h2>
+  <table>
+    <thead><tr><th>ناو</th><th>مۆبایل</th><th>ناونیشان</th><th>کات</th></tr></thead>
+    <tbody>
+      {% for s in suppliers %}
+      <tr><td>{{ s.name }}</td><td>{{ s.phone }}</td><td>{{ s.address }}</td><td>{{ s.created_at }}</td></tr>
+      {% else %}<tr><td colspan="4">دابینکەر نییە</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
