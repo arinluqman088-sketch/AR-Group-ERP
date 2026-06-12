@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block page_title %}داشبۆرد{% endblock %}
+{% block content %}
+<section class="cards">
+  <div class="card"><span>کاڵاکان</span><strong>{{ stats.products }}</strong></div>
+  <div class="card"><span>کڕیاران</span><strong>{{ stats.customers }}</strong></div>
+  <div class="card"><span>دابینکەران</span><strong>{{ stats.suppliers }}</strong></div>
+  <div class="card"><span>فرۆشتنی ئەمڕۆ</span><strong>{{ stats.sales_today|money }}</strong></div>
+  <div class="card"><span>خەرجی ئەمڕۆ</span><strong>{{ stats.expenses_today|money }}</strong></div>
+  <div class="card"><span>نرخی ستۆک</span><strong>{{ stats.stock_value|money }}</strong></div>
+  <div class="card warning"><span>ستۆکی کەم</span><strong>{{ stats.low_stock }}</strong></div>
+</section>
+
+<section class="grid two">
+  <div class="panel">
+    <h2>دوایین فرۆشتنەکان</h2>
+    <table>
+      <thead><tr><th>وەسل</th><th>کڕیار</th><th>کۆی گشتی</th><th>کات</th></tr></thead>
+      <tbody>
+        {% for sale in recent_sales %}
+        <tr>
+          <td>{{ sale.invoice_no }}</td>
+          <td>{{ sale.customer_name or 'کڕیاری گشتی' }}</td>
+          <td>{{ sale.total|money }}</td>
+          <td>{{ sale.created_at }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">هێشتا فرۆشتن نییە</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>ئاگاداری ستۆک</h2>
+    <table>
+      <thead><tr><th>کاڵا</th><th>ستۆک</th><th>کەمترین</th></tr></thead>
+      <tbody>
+        {% for p in low_stock_products %}
+        <tr><td>{{ p.name }}</td><td>{{ p.stock }}</td><td>{{ p.min_stock }}</td></tr>
+        {% else %}
+        <tr><td colspan="3">ستۆکەکان باشن</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
